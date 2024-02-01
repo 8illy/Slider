@@ -1,0 +1,17 @@
+	#previewCanvas,
+	#theCanvas {
+		transform-origin: top left;
+	}
+	
+	.dimensionInput{
+		display:inline-block;
+		width : 50px;
+	}
+	
+	video#tempVideo {
+  /*  position: absolute;
+    top: -10000000px;*/
+    width: 0;
+    height: 0;
+    display: block;
+}
