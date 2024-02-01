@@ -17,6 +17,9 @@ class Game{
 	get redditPage(){
 		return document.getElementById("subreddits").value;
 	}
+	get proxy(){
+		return document.getElementById("proxy").value;
+	}
 	
 	get allowGfy(){
 		return document.getElementById("allowGFY").checked;
@@ -80,8 +83,8 @@ class Game{
 			if(!this.allowGfy){
 				return this.loadNextRedditMedia(maintainState);
 			}
-			loadGfy(media.url,(url)=>{
-				this.slider.loadVideo(url,maintainState);
+			this.loadGfy(media.url,(url)=>{
+				this.slider.loadVideo(this.proxy+"/"+url,maintainState);
 			});
 			
 		}else{
@@ -89,7 +92,7 @@ class Game{
 			let redditLink = getRedditLink(media);
 			
 			if(redditMp4 && this.animateGifs){
-				this.slider.loadVideo("https://cors-anywhere.herokuapp.com/"+redditMp4,maintainState)
+				this.slider.loadVideo(this.proxy+"/"+redditMp4,maintainState)
 			}else{
 				this.slider.loadImg(redditLink?redditLink:extLink,maintainState);
 			}
@@ -98,4 +101,16 @@ class Game{
 		this.setMediaTitle(media);
 	}
 	
+	loadGfy(mediaUrl,cb){
+		let BASE_URL = (new URL(mediaUrl)).host.replace("www.","");
+		let gfyId = mediaUrl.split("/");
+		gfyId = gfyId[gfyId.length-1];
+		gfyId = gfyId.split(/[^a-zA-Z]/g)[0];
+		let url = `${this.proxy}/api.${BASE_URL}/v1/gfycats/${gfyId}`;
+		
+		doRequest(url,function(data){
+			cb(data.gfyItem.mp4Url);
+		});
+	
+	}
 }

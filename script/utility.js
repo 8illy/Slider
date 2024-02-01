@@ -69,15 +69,4 @@ function getRedditLink(media){
 }
 
 
-function loadGfy(mediaUrl,cb){
-	let BASE_URL = (new URL(mediaUrl)).host.replace("www.","");
-	let gfyId = mediaUrl.split("/");
-	gfyId = gfyId[gfyId.length-1];
-	gfyId = gfyId.split(/[^a-zA-Z]/g)[0];
-	let url = `https://api.${BASE_URL}/v1/gfycats/${gfyId}`;
-	
-	doRequest(url,function(data){
-		cb(data.gfyItem.mp4Url);
-	});
-	
-}
+

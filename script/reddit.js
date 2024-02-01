@@ -5,8 +5,7 @@ class Reddit{
 		this.sort = sort;
 		this.time = time;
 		
-		this.counter = 0;
-		this.media = [];
+		this.clearMedia();
 	}
 	
 	get after(){
@@ -22,6 +21,7 @@ class Reddit{
 	}
 	
 	clearMedia(){
+		this.counter = 0;
 		this.media = [];
 	}
 	
